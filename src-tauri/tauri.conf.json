@@ -49,7 +49,6 @@
     "macOS": {
       "entitlements": "entitlements.plist",
       "infoPlist": "Info.plist",
-      "signingIdentity": "Developer ID Application: zanwei guo (Z9VQ8GY7PB)",
       "minimumSystemVersion": "10.13"
     }
   },

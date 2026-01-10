@@ -54,10 +54,47 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci
 
+      # macOS: Import certificate for code signing
+      - name: Import Apple Certificate
+        if: matrix.platform == 'macos-latest'
+        env:
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          if [ -n "$APPLE_CERTIFICATE" ]; then
+            echo "Importing Apple certificate..."
+            CERTIFICATE_PATH=$RUNNER_TEMP/certificate.p12
+            KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+            KEYCHAIN_PASSWORD=$(openssl rand -base64 32)
+            
+            # Decode certificate
+            echo -n "$APPLE_CERTIFICATE" | base64 --decode > $CERTIFICATE_PATH
+            
+            # Create temporary keychain
+            security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+            security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+            security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+            
+            # Import certificate
+            security import $CERTIFICATE_PATH -P "$APPLE_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+            security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+            security list-keychain -d user -s $KEYCHAIN_PATH
+            
+            echo "Certificate imported successfully"
+          else
+            echo "No certificate provided, using ad-hoc signing"
+          fi
+
       - name: Build Tauri app
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # macOS signing
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          # macOS notarization (App Store Connect API)
+          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+          APPLE_API_KEY: ${{ secrets.APPLE_API_KEY }}
+          APPLE_API_KEY_PATH: ${{ secrets.APPLE_API_KEY_PATH }}
         with:
           tagName: ${{ github.ref_name }}
           releaseName: 'Skiller ${{ github.ref_name }}'
@@ -65,3 +102,11 @@ jobs:
           releaseDraft: true
           prerelease: false
           args: --target ${{ matrix.target }}
+
+      # Cleanup keychain
+      - name: Cleanup keychain
+        if: matrix.platform == 'macos-latest' && always()
+        run: |
+          if [ -f "$RUNNER_TEMP/app-signing.keychain-db" ]; then
+            security delete-keychain $RUNNER_TEMP/app-signing.keychain-db || true
+          fi

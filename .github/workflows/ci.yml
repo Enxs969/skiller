@@ -77,5 +77,7 @@ jobs:
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Use ad-hoc signing for CI builds (no certificate needed)
+          APPLE_SIGNING_IDENTITY: "-"
         with:
           args: --target ${{ matrix.target }}
