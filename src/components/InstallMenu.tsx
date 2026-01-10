@@ -108,22 +108,25 @@ export function InstallMenu({ skill, onInstall, disabled, defaultPackageManager 
   }, [open]);
 
   useEffect(() => {
+    const scrollableParent = document.querySelector('.panel-content');
+    if (!scrollableParent) return;
+
+    const preventScroll = (e: Event) => {
+      e.preventDefault();
+    };
+
     if (open) {
-      const scrollableParent = document.querySelector('.panel-content');
-      if (scrollableParent) {
-        scrollableParent.classList.add('no-scroll');
-      }
+      scrollableParent.classList.add('no-scroll');
+      scrollableParent.addEventListener('wheel', preventScroll, { passive: false });
+      scrollableParent.addEventListener('touchmove', preventScroll, { passive: false });
     } else {
-      const scrollableParent = document.querySelector('.panel-content');
-      if (scrollableParent) {
-        scrollableParent.classList.remove('no-scroll');
-      }
+      scrollableParent.classList.remove('no-scroll');
     }
+
     return () => {
-      const scrollableParent = document.querySelector('.panel-content');
-      if (scrollableParent) {
-        scrollableParent.classList.remove('no-scroll');
-      }
+      scrollableParent.classList.remove('no-scroll');
+      scrollableParent.removeEventListener('wheel', preventScroll);
+      scrollableParent.removeEventListener('touchmove', preventScroll);
     };
   }, [open]);
 

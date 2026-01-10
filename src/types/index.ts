@@ -24,6 +24,7 @@ export interface Skill {
   installIdentifier: string;
   supportedClients: Client[];
   isInstalled?: boolean;
+  rawFileUrl?: string;
 }
 
 export type Client = 

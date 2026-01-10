@@ -83,6 +83,7 @@ function parseSkill(data: any): Skill {
     tags: data.keywords || data.tags || [],
     installIdentifier: namespace || `@${owner}/${repo}/${data.name}`,
     supportedClients: ['claude-code', 'cursor', 'vscode', 'codex', 'amp', 'opencode', 'goose', 'letta', 'github'],
+    rawFileUrl: data.metadata?.rawFileUrl || undefined,
   };
 }
 
@@ -363,6 +364,7 @@ function getMockSkills(): Skill[] {
       tags: [],
       installIdentifier: '@anthropics/claude-code/frontend-design',
       supportedClients: ['claude-code', 'cursor', 'vscode', 'codex', 'amp', 'opencode', 'goose', 'letta', 'github'],
+      rawFileUrl: 'https://raw.githubusercontent.com/anthropics/claude-code/main/plugins/frontend-design/skills/frontend-design/SKILL.md',
     },
     {
       id: '7ddc88c4-47d8-4cc2-9263-94f08dced4f8',
@@ -375,6 +377,7 @@ function getMockSkills(): Skill[] {
       tags: [],
       installIdentifier: '@wshobson/agents/prompt-engineering-patterns',
       supportedClients: ['claude-code', 'cursor', 'vscode', 'codex', 'amp', 'opencode', 'goose', 'letta', 'github'],
+      rawFileUrl: 'https://raw.githubusercontent.com/wshobson/agents/main/skills/prompt-engineering-patterns/SKILL.md',
     },
     {
       id: 'a1299c1e-12ab-44af-a931-d7fa0254de10',
@@ -387,6 +390,35 @@ function getMockSkills(): Skill[] {
       tags: [],
       installIdentifier: '@obra/superpowers/brainstorming',
       supportedClients: ['claude-code', 'cursor', 'vscode', 'codex', 'amp', 'opencode', 'goose', 'letta', 'github'],
+      rawFileUrl: 'https://raw.githubusercontent.com/obra/superpowers/main/skills/brainstorming/SKILL.md',
     },
   ];
+}
+
+export async function fetchSkillContent(rawFileUrl: string): Promise<string> {
+  const cacheKey = apiCache.generateKey('skill-content', { url: rawFileUrl });
+  
+  const cached = apiCache.get<string>(cacheKey);
+  if (cached) {
+    console.debug('Cache hit for skill content:', cacheKey);
+    return cached;
+  }
+
+  return requestDeduplicator.dedupe(cacheKey, async () => {
+    try {
+      const response = await safeFetch(rawFileUrl);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+      
+      const content = await response.text();
+      apiCache.set(cacheKey, content);
+      
+      return content;
+    } catch (error) {
+      console.error('Failed to fetch skill content:', error);
+      throw error;
+    }
+  });
 }

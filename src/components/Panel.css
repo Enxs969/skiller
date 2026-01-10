@@ -9,9 +9,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
+  height: 46px;
+  padding: 8px;
   border-bottom: 1px solid hsl(var(--sidebar-border));
   background: hsl(var(--sidebar-background));
+  box-sizing: border-box;
 }
 
 .panel-title {
@@ -21,6 +23,19 @@
   font-size: 15px;
   font-weight: 600;
   color: hsl(var(--sidebar-foreground));
+}
+
+.panel-title-back {
+  gap: 4px;
+}
+
+.panel-back-btn {
+  padding: 4px;
+  margin-left: -4px;
+}
+
+.panel-back-btn:hover {
+  background: hsl(var(--sidebar-accent));
 }
 
 .panel-logo {
@@ -45,7 +60,7 @@
 .panel-filters {
   display: flex;
   gap: 8px;
-  padding: 12px 16px;
+  padding: 8px;
   border-bottom: 1px solid hsl(var(--sidebar-border));
   background: hsl(var(--sidebar-background));
 }
@@ -53,14 +68,20 @@
 .panel-content {
   flex: 1;
   overflow-y: auto;
-  scrollbar-gutter: stable;
-  padding: 12px;
+  padding: 8px;
   background: hsl(var(--sidebar-background));
-  border-radius: 0 0 16px 16px;
 }
 
 .panel-content.no-scroll {
-  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.panel-content.no-scroll::-webkit-scrollbar-thumb {
+  background-color: transparent !important;
+}
+
+.panel-content.no-scroll::-webkit-scrollbar-track {
+  background-color: transparent !important;
 }
 
 /* Loading state */
@@ -105,12 +126,10 @@
 /* Empty state */
 .panel-empty {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 32px;
-  text-align: center;
+  height: 100%;
+  font-size: 13px;
   color: hsl(var(--muted-foreground));
 }
 

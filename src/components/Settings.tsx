@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { getVersion } from '@tauri-apps/api/app';
 import { AppSettings, PackageManager, Theme, TerminalApp } from '../types';
 import './Settings.css';
 
@@ -27,7 +28,12 @@ export function Settings({ settings, onUpdate, onBack }: SettingsProps) {
   const [isRecordingShortcut, setIsRecordingShortcut] = useState(false);
   const [shortcutError, setShortcutError] = useState<string | null>(null);
   const [shortcutSuccess, setShortcutSuccess] = useState(false);
+  const [appVersion, setAppVersion] = useState<string>('');
   const shortcutInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    getVersion().then(setAppVersion).catch(() => setAppVersion('1.0.0'));
+  }, []);
 
   const handlePathSelect = async () => {
     try {
@@ -391,7 +397,7 @@ export function Settings({ settings, onUpdate, onBack }: SettingsProps) {
       </div>
 
       <footer className="settings-footer">
-        <div className="settings-version">Skiller v0.1.0</div>
+        <div className="settings-version">Skiller v{appVersion}</div>
         <a 
           className="settings-link" 
           href="https://claude-plugins.dev" 

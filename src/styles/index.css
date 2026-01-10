@@ -250,6 +250,7 @@ body {
 }
 
 .btn-sm {
+  height: 29px;
   padding: 6px 12px;
   font-size: 12px;
 }

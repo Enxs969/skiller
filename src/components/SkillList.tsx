@@ -18,6 +18,7 @@ interface SkillListProps {
   onInstalled: (item: InstalledItem) => void;
   onRefresh: () => void;
   onLoadMore: () => void;
+  onSkillClick?: (skill: Skill) => void;
 }
 
 interface InstallConfig {
@@ -37,7 +38,8 @@ export function SkillList({
   isInstalled, 
   onInstalled, 
   onRefresh,
-  onLoadMore 
+  onLoadMore,
+  onSkillClick
 }: SkillListProps) {
   const { settings } = useSettings();
   const [installConfig, setInstallConfig] = useState<InstallConfig | null>(null);
@@ -134,8 +136,7 @@ export function SkillList({
   if (!loading && filteredSkills.length === 0 && skills.length === 0) {
     return (
       <div className="panel-empty">
-        <div className="panel-empty-icon">🎯</div>
-        <div>No skills found</div>
+        No skills found
       </div>
     );
   }
@@ -169,6 +170,8 @@ export function SkillList({
           <div 
             key={skill.id}
             ref={index === filteredSkills.length - 1 ? lastItemRef : null}
+            onClick={() => onSkillClick?.(skill)}
+            style={{ cursor: onSkillClick ? 'pointer' : 'default' }}
           >
             <Card
             name={skill.name}
@@ -178,7 +181,7 @@ export function SkillList({
             tags={skill.tags}
             isInstalled={false}
             actions={
-              <div className="skill-actions">
+              <div className="skill-actions" onClick={(e) => e.stopPropagation()}>
                 <button
                   className="btn btn-primary btn-sm"
                   onClick={() => handleLocalInstall(skill)}
