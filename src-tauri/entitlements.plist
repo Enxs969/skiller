@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Allow app to send Apple Events to other applications (AppleScript automation) -->
+    <key>com.apple.security.automation.apple-events</key>
+    <true/>
+    
+    <!-- Inherit entitlements (needed for child processes like osascript) -->
+    <key>com.apple.security.inherit</key>
+    <true/>
+</dict>
+</plist>

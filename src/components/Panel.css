@@ -1,0 +1,120 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid hsl(var(--sidebar-border));
+  background: hsl(var(--sidebar-background));
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: hsl(var(--sidebar-foreground));
+}
+
+.panel-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.panel-logo-img {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+.panel-filters {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid hsl(var(--sidebar-border));
+  background: hsl(var(--sidebar-background));
+}
+
+.panel-content {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  padding: 12px;
+  background: hsl(var(--sidebar-background));
+  border-radius: 0 0 16px 16px;
+}
+
+.panel-content.no-scroll {
+  overflow: hidden;
+}
+
+/* Loading state */
+.panel-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 200px;
+  color: hsl(var(--muted-foreground));
+}
+
+/* Error state */
+.panel-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.panel-error-message {
+  color: hsl(var(--muted-foreground));
+  font-size: 13px;
+}
+
+.panel-error-offline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: hsl(var(--chart-4));
+  background: hsl(var(--chart-4) / 0.1);
+  border-radius: var(--radius);
+}
+
+/* Empty state */
+.panel-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 32px;
+  text-align: center;
+  color: hsl(var(--muted-foreground));
+}
+
+.panel-empty-icon {
+  font-size: 32px;
+  opacity: 0.5;
+}
