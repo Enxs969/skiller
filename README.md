@@ -31,11 +31,6 @@ https://github.com/user-attachments/assets/1f69740f-5fff-4994-9f07-2d86f71ac831
 - **Global Shortcut**: Customize a hotkey to instantly open Skiller
 - **Infinite Scroll**: Smooth pagination with preloading
 
-### Multi-Platform
-- **macOS**: Full support with native features (Dock visibility, multiple terminals)
-- **Windows**: System tray support with common terminals
-- **Linux**: Support for popular terminal emulators
-
 ### Flexible Installation
 - **10 Client Targets**: Install skills to Claude, Cursor, VS Code, and more
 - **4 Package Managers**: Choose between npm, bun, pnpm, or yarn
@@ -75,10 +70,6 @@ npm run tauri dev
 # Build for production
 npm run tauri build
 ```
-
-### Download Pre-built Binaries
-
-Check the [Releases](https://github.com/your-username/skiller/releases) page for pre-built applications.
 
 ---
 
@@ -347,13 +338,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [claude-plugins.dev](https://claude-plugins.dev) for the plugin/skill registry
 - [Tauri](https://tauri.app/) for the amazing desktop framework
 - [Anthropic](https://anthropic.com/) for Claude
-
----
-
-## Contact
-
-- **Issues**: [GitHub Issues](https://github.com/your-username/skiller/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-username/skiller/discussions)
 
 ---
 
