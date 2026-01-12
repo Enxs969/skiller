@@ -7,7 +7,15 @@ Your Developer ID Application certificate has been successfully installed:
 Developer ID Application: zanwei guo (Z9VQ8GY7PB)
 ```
 
-## 🔧 Configure Signing Environment Variables
+## 🚨 Important: Why Notarization is Required
+
+From macOS Catalina (10.15), Apple requires all distributed apps to be **notarized**. Without notarization, users will see:
+
+> "Skiller.app" cannot be opened because Apple cannot check it for malicious software.
+
+**Both Code Signing AND Notarization are required for users to open the app directly.**
+
+## 🔧 Local Development Setup
 
 ### Method 1: Temporary Setup (Current Terminal Session Only)
 
@@ -63,6 +71,55 @@ Notarization allows users to open the app directly without right-clicking "Open"
    ```bash
    source ~/.zshrc
    ```
+
+## 🔑 GitHub Actions Configuration (CI/CD)
+
+To enable code signing and notarization in GitHub Actions releases:
+
+### Step 1: Export Certificate to Base64
+
+Run the helper script:
+```bash
+chmod +x scripts/export-certificate.sh
+./scripts/export-certificate.sh
+```
+
+Or manually:
+```bash
+# Export certificate from Keychain Access as .p12 file
+# Then convert to Base64:
+base64 -i certificate.p12 | pbcopy
+```
+
+### Step 2: Configure GitHub Secrets
+
+Go to your GitHub repository: **Settings → Secrets and variables → Actions**
+
+Add the following secrets:
+
+| Secret Name | Description | How to Get |
+|-------------|-------------|------------|
+| `APPLE_CERTIFICATE` | Base64-encoded .p12 certificate | Run export script or `base64 -i cert.p12` |
+| `APPLE_CERTIFICATE_PASSWORD` | Password for the .p12 file | Set when exporting from Keychain |
+| `APPLE_SIGNING_IDENTITY` | Full certificate name | `Developer ID Application: zanwei guo (Z9VQ8GY7PB)` |
+| `APPLE_API_ISSUER` | App Store Connect Issuer ID | From App Store Connect API Keys page |
+| `APPLE_API_KEY` | App Store Connect Key ID | From App Store Connect API Keys page |
+| `APPLE_API_KEY_PATH` | Base64-encoded .p8 API key file | `base64 -i AuthKey_XXXX.p8` |
+
+### Step 3: Trigger a Release
+
+Create and push a new tag:
+```bash
+git tag v1.0.5
+git push origin v1.0.5
+```
+
+The GitHub Action will automatically:
+1. Import the certificate
+2. Sign the application
+3. Submit to Apple for notarization
+4. Wait for notarization completion
+5. Staple the notarization ticket to the DMG
 
 ## 🚀 Build Signed Application
 
